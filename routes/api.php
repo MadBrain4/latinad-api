@@ -18,9 +18,9 @@ Route::middleware([SetUserLocale::class, AuthApiMiddleware::class])->group(funct
     Route::prefix('displays')->group(function () {
         Route::get('/', [DisplayController::class, 'index']);
         Route::post('/', [DisplayController::class, 'store']);
-        Route::get('/{display}', [DisplayController::class, 'show']);
-        Route::put('/{display}', [DisplayController::class, 'update']);
-        Route::delete('/{display}', [DisplayController::class, 'destroy']);
+        Route::get('/{id}', [DisplayController::class, 'show']);
+        Route::put('/{id}', [DisplayController::class, 'update']);
+        Route::delete('/{id}', [DisplayController::class, 'destroy']);
     });
 
     Route::get('/user/language', [UserLanguageController::class, 'getLanguage']);

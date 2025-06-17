@@ -8,6 +8,7 @@ use App\Http\Requests\Display\UpdateDisplayRequest;
 use App\Models\Display;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Log;
 
 class DisplayController extends Controller
 {
@@ -18,7 +19,7 @@ class DisplayController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Display::where('user_id', auth()->id);
+        $query = Display::where('user_id', auth('api')->id());
 
         if ($name = $request->get('name')) {
             $query->where('name', 'like', "%$name%");
@@ -28,6 +29,21 @@ class DisplayController extends Controller
             $query->where('type', $type);
         }
 
+        // Ordenamiento
+        $sort = $request->get('sort');
+        switch ($sort) {
+            case 'name':
+                $query->orderBy('name', 'asc');
+                break;
+            case 'name_desc':
+                $query->orderBy('name', 'desc');
+                break;
+            default:
+                $query->orderBy('created_at', 'desc');
+                break;
+        }
+
+        // Paginación
         $perPage = $request->get('perPage', 10);
 
         return response()->json($query->paginate($perPage));
@@ -47,8 +63,10 @@ class DisplayController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Display $display)
+    public function show($id)
     {
+        $display = Display::findOrFail($id);
+
         $this->authorize('view', $display);
 
         return response()->json($display);
@@ -58,8 +76,10 @@ class DisplayController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDisplayRequest $request, Display $display)
+    public function update(UpdateDisplayRequest $request, $id)
     {
+        $display = Display::findOrFail($id);
+
         $this->authorize('update', $display);
 
         $display->update($request->validated());
@@ -67,11 +87,14 @@ class DisplayController extends Controller
         return response()->json($display);
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Display $display)
+    public function destroy($id)
     {
+        $display = Display::findOrFail($id);
+
         $this->authorize('delete', $display);
 
         $display->delete();

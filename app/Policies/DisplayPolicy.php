@@ -37,7 +37,7 @@ class DisplayPolicy
      */
     public function update(User $user, Display $display): bool
     {
-        return false;
+        return $user->id === $display->user_id;
     }
 
     /**

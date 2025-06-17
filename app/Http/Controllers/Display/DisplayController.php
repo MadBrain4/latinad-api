@@ -93,7 +93,10 @@ class DisplayController extends Controller
      */
     public function destroy($id)
     {
-        $display = Display::findOrFail($id);
+        $display = Display::find($id);
+        if (!$display) {
+            return response()->json(['message' => __('display.not_found')], 404);
+        }
 
         $this->authorize('delete', $display);
 

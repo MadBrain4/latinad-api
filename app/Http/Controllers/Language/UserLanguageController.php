@@ -11,8 +11,18 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class UserLanguageController extends Controller
 {
     /**
-     * Obtener el idioma actual del usuario autenticado
-     */
+     * Obtener idioma del usuario
+     *
+     * Retorna el idioma actual configurado por el usuario autenticado.
+     * @header Authorization Bearer {token}
+     *
+     * @group Idioma
+     * @authenticated
+     *
+     * @response 200 {
+     *   "language": "es"
+     * }
+    */
     public function getLanguage()
     {
         $language = JWTAuth::parseToken()->authenticate()->language;
@@ -22,8 +32,21 @@ class UserLanguageController extends Controller
         ]);
     }
 
-    /**
-     * Actualizar el idioma del usuario autenticado
+        /**
+     * Actualizar idioma del usuario
+     *
+     * Cambia el idioma preferido del usuario autenticado.
+     *
+     * @group Idioma
+     * @authenticated
+     * @header Authorization Bearer {token}
+     *
+     * @bodyParam language string required Código del idioma (ej: es, en, pt). Example: en
+     *
+     * @response 200 {
+     *   "message": "Idioma actualizado correctamente",
+     *   "language": "en"
+     * }
      */
     public function updateLanguage(UpdateLanguageRequest $request)
     {

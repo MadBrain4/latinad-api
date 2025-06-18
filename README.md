@@ -103,3 +103,5 @@
     🛡️ Autenticación
     Agrega el token JWT en el header:
     Authorization: Bearer {token}
+
+Hay documentación tipo Swagger en la ruta /docs 

@@ -81,7 +81,7 @@ class DisplayController extends Controller
     }
 
 
-        /**
+    /**
      * Crear un Display
      *
      * Crea un nuevo display asociado al usuario autenticado.
@@ -155,7 +155,7 @@ class DisplayController extends Controller
     }
 
 
-        /**
+    /**
      * Actualizar un Display
      *
      * Modifica un display existente.

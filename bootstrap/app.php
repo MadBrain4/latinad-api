@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\SetUserLocale;
+use Illuminate\Auth\Access\AuthorizationException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -16,5 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(SetUserLocale::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->renderable(function (AuthorizationException $e, $request) {
+            return response()->json([
+                'message' => __('messages.forbidden'),
+            ], 403);
+        });
     })->create();

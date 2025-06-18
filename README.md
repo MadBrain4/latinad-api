@@ -1,104 +1,102 @@
 🎯 latinad-api
+    API REST para gestión de pantallas publicitarias — Desafío Técnico LatinAd
+
 📦 Requisitos
-PHP 8.2+
+    - PHP 8.2+
 
-Composer
+    - Composer
 
-Laravel 12
+    - Laravel 12
 
-MySQL o compatible
+    - MySQL o compatible
 
 ⚙️ Instalación
-📥 Clona el repositorio:
-git clone git@github.com:MadBrain4/latinad-api.git
-cd latinad-api
+    1. 📥 Clona el repositorio:
+        git clone git@github.com:MadBrain4/latinad-api.git
+        cd latinad-api
 
-📦 Instala dependencias:
-composer install
+    2. 📦 Instala dependencias:
+        composer install
 
-🛠️ Copia el archivo .env y configúralo:
-cp .env.example .env
-Ajusta las variables de entorno (base de datos, JWT, etc.)
+    3. 🛠️ Copia el archivo .env y configúralo:
+        cp .env.example .env
+        Ajusta las variables de entorno (base de datos, JWT, etc.)
 
-🔑 Genera la clave de aplicación:
-php artisan key:generate
+    4. 🔑 Genera la clave de aplicación:
+        php artisan key:generate
 
-🧱 Ejecuta migraciones y seeders:
-php artisan migrate --seed
+    5. 🧱 Ejecuta migraciones y seeders:
+        php artisan migrate --seed
 
-🔐 Genera la clave JWT:
-php artisan jwt:secret
+    6. 🔐 Genera la clave JWT:
+        php artisan jwt:secret
 
-🚀 Inicia el servidor:
-php artisan serve
+    7. 🚀 Inicia el servidor:
+        php artisan serve
 
 📡 Endpoints
-🔐 Autenticación
-📨 POST /register
-Registra un nuevo usuario.
-Parámetros:
 
-name
+    🔐 Autenticación
 
-email
+        📨 POST /api/register: Registrar un nuevo usuario
 
-password
+        Body (JSON)
+        - name: string
+        - email: string
+        - password: string
+        - password_confirmation: string
 
-password_confirmation
+        🔓 No requiere autenticación.
 
-🔐 POST /login
-Autentica y devuelve un token JWT.
-Parámetros:
 
-email
+        🔐 POST /login: Iniciar sesión y retornar un token JWT
+        Body (JSON)
+        - email: string
+        - password: string
 
-password
+        🔓 No requiere autenticación.
 
-🚪 POST /logout
-Cierra la sesión (requiere token JWT).
 
-🖥️ Displays (pantallas)
-Todas las rutas requieren token JWT (Authorization: Bearer {token})
+        🚪 POST /logout: Cierra la sesión.
 
-📄 GET /displays
-Lista todas las pantallas.
+        🔓 Requiere autenticación.
 
-➕ POST /displays
-Crea una nueva pantalla.
-Parámetros requeridos:
+    🖥️ Displays (pantallas)
 
-name
+        Todas las rutas requieren token JWT (Authorization: Bearer {token})
 
-description
+        📄 GET /displays: Lista todas las pantallas.
 
-price_per_day
+        ➕ POST /displays: Crea una nueva pantalla.
+        Body (JSON)
+        - name: string
+        - description: string
+        - price_per_day: float
+        - resolution_height: int
+        - resolution_width: int
+        - type: indoor | outdoor
 
-resolution_height
+        🔍 GET /displays/{id}: Muestra detalles de una pantalla específica.
 
-resolution_width
+        ✏️ PUT /displays/{id}: Actualiza una pantalla existente.
+        Body (JSON)
+        - name: string
+        - description: string
+        - price_per_day: float
+        - resolution_height: int
+        - resolution_width: int
+        - type: indoor | outdoor
 
-type (indoor | outdoor)
+        🗑️ DELETE /displays/{id}: Elimina una pantalla por ID.
 
-🔍 GET /displays/{id}
-Muestra detalles de una pantalla específica.
+    🌐 Idioma del usuario
 
-✏️ PUT /displays/{id}
-Actualiza una pantalla existente.
-Parámetros: iguales a POST /displays
+        🧾 GET /user/language: Retorna el idioma actual del usuario.
 
-🗑️ DELETE /displays/{id}
-Elimina una pantalla por ID.
+        📝 PUT /user/language: Actualiza el idioma del usuario.
+        Body (JSON)
+        - language: string (por ejemplo, es o en)
 
-🌐 Idioma del usuario
-🧾 GET /user/language
-Retorna el idioma actual del usuario.
-
-📝 PUT /user/language
-Actualiza el idioma del usuario.
-Parámetro:
-
-language (ej: es, en)
-
-🛡️ Autenticación
-Agrega el token JWT en el header:
-Authorization: Bearer {token}
+    🛡️ Autenticación
+    Agrega el token JWT en el header:
+    Authorization: Bearer {token}

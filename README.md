@@ -1,7 +1,9 @@
 🎯 latinad-api
+
     API REST para gestión de pantallas publicitarias — Desafío Técnico LatinAd
 
 📦 Requisitos
+
     - PHP 8.2+
 
     - Composer
@@ -11,6 +13,7 @@
     - MySQL o compatible
 
 ⚙️ Instalación
+
     1. 📥 Clona el repositorio:
         git clone git@github.com:MadBrain4/latinad-api.git
         cd latinad-api

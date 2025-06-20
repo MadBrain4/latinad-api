@@ -15,7 +15,7 @@ class SetUserLocale
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-     public function handle($request, Closure $next)
+    public function handle($request, Closure $next)
     {
         $user = Auth::guard('api')->user();
 
